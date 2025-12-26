@@ -5,15 +5,15 @@ from pathlib import Path
 
 import pytest
 
-from logsense.anomaly.baseline import BaselineStats, FeatureStat, compute_stats
-from logsense.anomaly.detector import (
+from loglens.anomaly.baseline import BaselineStats, FeatureStat, compute_stats
+from loglens.anomaly.detector import (
     AnomalyResult,
     anomaly_results_to_findings,
     detect_anomalies,
 )
-from logsense.anomaly.features import FeatureExtractor, TimeBucket
-from logsense.models import Event, FindingSeverity, Severity
-from logsense.storage.baseline_repo import BaselineRepository
+from loglens.anomaly.features import FeatureExtractor, TimeBucket
+from loglens.models import Event, FindingSeverity, Severity
+from loglens.storage.baseline_repo import BaselineRepository
 
 # ---------------------------------------------------------------------------
 # Helpers

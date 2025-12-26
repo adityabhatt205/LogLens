@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from logsense.plugins.loader import load_plugins
-from logsense.plugins.registry import PluginRegistry
+from loglens.plugins.loader import load_plugins
+from loglens.plugins.registry import PluginRegistry
 
 # ---------------------------------------------------------------------------
 # PluginRegistry

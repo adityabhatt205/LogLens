@@ -8,8 +8,8 @@ from pathlib import Path
 
 import pytest
 
-from logsense.models import Event, Finding, FindingSeverity, Severity
-from logsense.storage.findings_repo import FindingsRepository, meets_min_severity
+from loglens.models import Event, Finding, FindingSeverity, Severity
+from loglens.storage.findings_repo import FindingsRepository, meets_min_severity
 
 # ---------------------------------------------------------------------------
 # Helpers
