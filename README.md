@@ -95,7 +95,7 @@ The IP addresses above (`ip_8390373f`, …) are deterministic pseudonyms — the
 
 ```bash
 # Install (core only — no external dependencies beyond PyYAML and typer)
-pip install .
+pip install loglens
 
 # Scan a log file
 loglens scan /var/log/syslog
@@ -104,7 +104,7 @@ loglens scan /var/log/syslog
 loglens tail /var/log/nginx/access.log
 
 # Start the web dashboard
-pip install '.[web]'
+pip install 'loglens[web]'
 loglens serve
 ```
 
@@ -119,7 +119,7 @@ That's it. Open `http://localhost:8080` in your browser.
 ### Core only
 
 ```bash
-pip install .
+pip install loglens
 ```
 
 Includes: file scanning, PII redaction, rule engine, anomaly detection, findings persistence, Markdown export, plugin system.
@@ -127,17 +127,17 @@ Includes: file scanning, PII redaction, rule engine, anomaly detection, findings
 ### Optional feature sets
 
 ```bash
-pip install '.[web]'         # web dashboard + REST API (FastAPI, uvicorn, Jinja2)
-pip install '.[opensearch]'  # OpenSearch / Elasticsearch integration
-pip install '.[evtx]'        # Windows Event Log (.evtx) support
-pip install '.[claude]'      # Anthropic Claude API
-pip install '.[embed]'       # ChromaDB for RAG (llm ask command)
+pip install 'loglens[web]'         # web dashboard + REST API (FastAPI, uvicorn, Jinja2)
+pip install 'loglens[opensearch]'  # OpenSearch / Elasticsearch integration
+pip install 'loglens[evtx]'        # Windows Event Log (.evtx) support
+pip install 'loglens[claude]'      # Anthropic Claude API
+pip install 'loglens[embed]'       # ChromaDB for RAG (llm ask command)
 ```
 
 Install everything:
 
 ```bash
-pip install '.[web,opensearch,evtx,claude,embed]'
+pip install 'loglens[web,opensearch,evtx,claude,embed]'
 ```
 
 ### Shell auto-completion
@@ -270,7 +270,7 @@ loglens tail /var/log/auth.log --from-start --no-rules
 
 ### serve
 
-Start the LogLens web dashboard (requires `pip install '.[web]'`).
+Start the LogLens web dashboard (requires `pip install 'loglens[web]'`).
 
 ```bash
 loglens serve [OPTIONS]
@@ -486,7 +486,7 @@ loglens llm summarize --since 24h
 Ask questions about your findings and errors using RAG over the local SQLite database:
 
 ```bash
-# Build the vector index first (requires pip install '.[embed]')
+# Build the vector index first (requires pip install 'loglens[embed]')
 loglens llm index
 
 # Then ask freely
@@ -849,7 +849,7 @@ export LLM_API_KEY=sk-...
 
 ## Web Dashboard & REST API
 
-Start the server (requires `pip install '.[web]'`):
+Start the server (requires `pip install 'loglens[web]'`):
 
 ```bash
 loglens serve --port 8080
