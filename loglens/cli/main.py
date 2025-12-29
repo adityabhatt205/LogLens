@@ -30,6 +30,7 @@ from loglens.cli.findings_cmd import app as findings_app
 from loglens.cli.journald_cmd import app as journald_app
 from loglens.cli.llm_cmd import app as llm_app
 from loglens.cli.opensearch_cmd import app as opensearch_app
+from loglens.cli.ssh_cmd import app as ssh_app
 from loglens.config import Config
 from loglens.errors.tracker import ErrorTracker
 from loglens.models import Event, Finding
@@ -55,6 +56,7 @@ app.add_typer(rules_app, name="rules")
 app.add_typer(opensearch_app, name="opensearch")
 app.add_typer(docker_app, name="docker")
 app.add_typer(journald_app, name="journald")
+app.add_typer(ssh_app, name="ssh")
 app.add_typer(errors_app, name="errors")
 app.add_typer(findings_app, name="findings")
 app.add_typer(anomaly_app, name="anomaly")
