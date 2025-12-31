@@ -6,7 +6,7 @@
 
 **Local log analysis with PII redaction, rule-based threat detection, anomaly detection, LLM-powered insights, and a web dashboard — all running on your machine, no data leaves your infrastructure by default.**
 
-![LogLens web dashboard](docs/dashboard.png)
+![LogLens web dashboard](https://raw.githubusercontent.com/adityabhatt/loglens/master/docs/dashboard.png)
 
 Or stay in the terminal — format auto-detected, PII redacted, threats flagged:
 
