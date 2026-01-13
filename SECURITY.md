@@ -6,8 +6,8 @@ directly after parsing.
 
 ## Supported versions
 
-LogLens is in early development (`0.x`, alpha). Security fixes are applied to
-the latest state of `master`.
+LogLens is pre-1.0 (`0.x`, beta). Security fixes are applied to the latest
+state of `master`.
 
 | Version | Supported |
 |---------|-----------|
