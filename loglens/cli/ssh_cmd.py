@@ -11,6 +11,7 @@ import typer
 
 from loglens.adapters.ssh import SSHAdapter
 from loglens.cli._types import REDACT_MAP, RedactModeArg
+from loglens.cli.colors import SEVERITY_COLOR
 from loglens.config import Config
 from loglens.errors.tracker import ErrorTracker
 from loglens.models import Event, Finding
@@ -28,16 +29,9 @@ _BUILTIN_RULES_DIR = Path(__file__).parent.parent / "rules" / "builtin"
 
 app = typer.Typer(help="Analyze logs from a remote host over SSH.")
 
-_SEVERITY_COLOR = {
-    "low": typer.colors.CYAN,
-    "medium": typer.colors.YELLOW,
-    "high": typer.colors.RED,
-    "critical": typer.colors.BRIGHT_RED,
-}
-
 
 def _print_finding(finding: Finding) -> None:
-    color = _SEVERITY_COLOR.get(finding.severity.value, typer.colors.WHITE)
+    color = SEVERITY_COLOR.get(finding.severity.value, typer.colors.WHITE)
     ts = finding.timestamp.strftime("%Y-%m-%d %H:%M:%S")
     line = f"  [{finding.severity.value.upper()}] {ts}  {finding.rule_id}  {finding.message}"
     typer.echo(typer.style(line, fg=color))
