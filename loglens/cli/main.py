@@ -41,6 +41,7 @@ from loglens.parsers.detector import FormatDetector
 from loglens.pii.patterns import PIIPattern
 from loglens.pii.redactor import PIIRedactor
 from loglens.plugins.loader import load_plugins
+from loglens.rules import BUILTIN_RULES_DIR
 from loglens.rules.engine import RuleEngine
 from loglens.rules.loader import load_rules_dir, validate_rule_file
 from loglens.rules.sigma import SigmaConversionError, load_sigma_file
@@ -48,8 +49,6 @@ from loglens.storage.baseline_repo import BaselineRepository
 from loglens.storage.dismiss_repo import DismissRepository
 from loglens.storage.errors_repo import ErrorsRepository
 from loglens.storage.findings_repo import FindingsRepository, meets_min_severity
-
-_BUILTIN_RULES_DIR = Path(__file__).parent.parent / "rules" / "builtin"
 
 app = typer.Typer(name="loglens", help="LogLens — local log analysis with LLM support.")
 app.command("tail")(tail_cmd.tail_watch)
@@ -184,7 +183,7 @@ def scan(
     # Load rules (built-in + CLI --rules-dir + plugins)
     engine: RuleEngine | None = None
     if not no_rules:
-        all_rules = list(load_rules_dir(_BUILTIN_RULES_DIR))
+        all_rules = list(load_rules_dir(BUILTIN_RULES_DIR))
         if rules_dir and rules_dir.is_dir():
             all_rules.extend(load_rules_dir(rules_dir))
         for pdir in plugin_registry.rule_dirs:
@@ -432,7 +431,7 @@ def rules_list(
     rules_dir: Annotated[Optional[Path], typer.Option("--rules-dir")] = None,
 ) -> None:
     """List all loaded detection rules."""
-    all_rules = list(load_rules_dir(_BUILTIN_RULES_DIR))
+    all_rules = list(load_rules_dir(BUILTIN_RULES_DIR))
     if rules_dir and rules_dir.is_dir():
         all_rules.extend(load_rules_dir(rules_dir))
 

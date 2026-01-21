@@ -18,14 +18,13 @@ from loglens.models import Event, Finding
 from loglens.pii.patterns import PIIPattern
 from loglens.pii.redactor import PIIRedactor
 from loglens.plugins.loader import load_plugins
+from loglens.rules import BUILTIN_RULES_DIR
 from loglens.rules.engine import RuleEngine
 from loglens.rules.loader import load_rules_dir
 from loglens.storage.dismiss_repo import DismissRepository
 from loglens.storage.errors_repo import ErrorsRepository
 from loglens.storage.findings_repo import FindingsRepository, meets_min_severity
 from loglens.tail_helpers import meets_alert_severity, post_webhook
-
-_BUILTIN_RULES_DIR = Path(__file__).parent.parent / "rules" / "builtin"
 
 app = typer.Typer(help="Analyze logs from a Graylog server.")
 
@@ -50,7 +49,7 @@ def _print_finding(finding: Finding) -> None:
 def _build_engine(no_rules: bool, rules_dir: Optional[Path], plugin_registry) -> RuleEngine | None:
     if no_rules:
         return None
-    all_rules = list(load_rules_dir(_BUILTIN_RULES_DIR))
+    all_rules = list(load_rules_dir(BUILTIN_RULES_DIR))
     if rules_dir and rules_dir.is_dir():
         all_rules.extend(load_rules_dir(rules_dir))
     for pdir in plugin_registry.rule_dirs:
