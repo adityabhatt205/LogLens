@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import asyncio
-import re
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Annotated, Optional
@@ -16,9 +15,8 @@ from loglens.cli.colors import SEVERITY_COLOR
 from loglens.config import Config
 from loglens.errors.tracker import ErrorTracker
 from loglens.models import Event, Finding
-from loglens.pii.patterns import PIIPattern
 from loglens.pii.redactor import PIIRedactor
-from loglens.plugins.loader import load_plugins
+from loglens.plugins.loader import compile_plugin_pii_patterns, load_plugins
 from loglens.rules import BUILTIN_RULES_DIR
 from loglens.rules.engine import RuleEngine
 from loglens.rules.loader import load_rules_dir
@@ -101,10 +99,7 @@ def loki_scan(
     cfg = Config.load(config)
 
     plugin_registry = load_plugins(cfg.plugins_dir)
-    plugin_pii = [
-        PIIPattern(name=p["name"], pattern=re.compile(p["pattern"]), prefix=p["prefix"])
-        for p in plugin_registry.pii_patterns
-    ]
+    plugin_pii = compile_plugin_pii_patterns(plugin_registry)
     redactor = PIIRedactor.from_config(
         salt=cfg.pii_salt,
         rules_path=cfg.pii_rules_path,
@@ -235,10 +230,7 @@ def loki_tail(
     cfg = Config.load(config)
 
     plugin_registry = load_plugins(cfg.plugins_dir)
-    plugin_pii = [
-        PIIPattern(name=p["name"], pattern=re.compile(p["pattern"]), prefix=p["prefix"])
-        for p in plugin_registry.pii_patterns
-    ]
+    plugin_pii = compile_plugin_pii_patterns(plugin_registry)
     redactor = PIIRedactor.from_config(
         salt=cfg.pii_salt,
         rules_path=cfg.pii_rules_path,

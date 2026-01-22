@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import asyncio
 import queue
-import re
 import shutil
 import subprocess
 import threading
@@ -34,9 +33,8 @@ from loglens.fleet import (
     select_targets,
 )
 from loglens.models import Event, Finding, Severity
-from loglens.pii.patterns import PIIPattern
 from loglens.pii.redactor import PIIRedactor
-from loglens.plugins.loader import load_plugins
+from loglens.plugins.loader import compile_plugin_pii_patterns, load_plugins
 from loglens.rules import BUILTIN_RULES_DIR
 from loglens.rules.engine import RuleEngine
 from loglens.rules.loader import load_rules_dir
@@ -203,10 +201,7 @@ def fleet_scan(
 
     cfg = Config.load(config)
     plugin_registry = load_plugins(cfg.plugins_dir)
-    plugin_pii = [
-        PIIPattern(name=p["name"], pattern=re.compile(p["pattern"]), prefix=p["prefix"])
-        for p in plugin_registry.pii_patterns
-    ]
+    plugin_pii = compile_plugin_pii_patterns(plugin_registry)
     redactor = PIIRedactor.from_config(
         salt=cfg.pii_salt,
         rules_path=cfg.pii_rules_path,
@@ -389,10 +384,7 @@ def fleet_tail(
 
     cfg = Config.load(config)
     plugin_registry = load_plugins(cfg.plugins_dir)
-    plugin_pii = [
-        PIIPattern(name=p["name"], pattern=re.compile(p["pattern"]), prefix=p["prefix"])
-        for p in plugin_registry.pii_patterns
-    ]
+    plugin_pii = compile_plugin_pii_patterns(plugin_registry)
     redactor = PIIRedactor.from_config(
         salt=cfg.pii_salt,
         rules_path=cfg.pii_rules_path,
