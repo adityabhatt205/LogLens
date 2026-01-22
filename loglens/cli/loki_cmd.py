@@ -17,9 +17,7 @@ from loglens.errors.tracker import ErrorTracker
 from loglens.models import Event, Finding
 from loglens.pii.redactor import PIIRedactor
 from loglens.plugins.loader import compile_plugin_pii_patterns, load_plugins
-from loglens.rules import BUILTIN_RULES_DIR
-from loglens.rules.engine import RuleEngine
-from loglens.rules.loader import load_rules_dir
+from loglens.rules.loader import build_engine
 from loglens.storage.dismiss_repo import DismissRepository
 from loglens.storage.errors_repo import ErrorsRepository
 from loglens.storage.findings_repo import FindingsRepository, meets_min_severity
@@ -40,18 +38,6 @@ def _print_finding(finding: Finding) -> None:
     ts = finding.timestamp.strftime("%Y-%m-%d %H:%M:%S")
     line = f"  [{finding.severity.value.upper()}] {ts}  {finding.rule_id}  {finding.message}"
     typer.echo(typer.style(line, fg=color))
-
-
-def _build_engine(no_rules: bool, rules_dir: Optional[Path], plugin_registry) -> RuleEngine | None:
-    if no_rules:
-        return None
-    all_rules = list(load_rules_dir(BUILTIN_RULES_DIR))
-    if rules_dir and rules_dir.is_dir():
-        all_rules.extend(load_rules_dir(rules_dir))
-    for pdir in plugin_registry.rule_dirs:
-        all_rules.extend(load_rules_dir(pdir))
-    all_rules.extend(plugin_registry.rules)
-    return RuleEngine(all_rules)
 
 
 @app.command("scan")
@@ -106,7 +92,7 @@ def loki_scan(
         mode=REDACT_MAP[redact],
         additional=plugin_pii or None,
     )
-    engine = _build_engine(no_rules, rules_dir, plugin_registry)
+    engine = build_engine(no_rules, rules_dir, plugin_registry)
 
     events: list[Event] = []
     findings: list[Finding] = []
@@ -237,7 +223,7 @@ def loki_tail(
         mode=REDACT_MAP[redact],
         additional=plugin_pii or None,
     )
-    engine = _build_engine(no_rules, rules_dir, plugin_registry)
+    engine = build_engine(no_rules, rules_dir, plugin_registry)
 
     sep = "-" * 60
     typer.echo(f"\n{sep}")

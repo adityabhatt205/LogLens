@@ -22,9 +22,7 @@ from loglens.errors.tracker import ErrorTracker
 from loglens.models import Finding
 from loglens.pii.redactor import PIIRedactor
 from loglens.plugins.loader import compile_plugin_pii_patterns, load_plugins
-from loglens.rules import BUILTIN_RULES_DIR
-from loglens.rules.engine import RuleEngine
-from loglens.rules.loader import load_rules_dir
+from loglens.rules.loader import build_engine
 from loglens.storage.dismiss_repo import DismissRepository
 from loglens.storage.errors_repo import ErrorsRepository
 from loglens.storage.findings_repo import FindingsRepository, meets_min_severity
@@ -86,15 +84,7 @@ def tail_watch(
         additional=plugin_pii or None,
     )
 
-    engine: RuleEngine | None = None
-    if not no_rules:
-        all_rules = list(load_rules_dir(BUILTIN_RULES_DIR))
-        if rules_dir and rules_dir.is_dir():
-            all_rules.extend(load_rules_dir(rules_dir))
-        for pdir in plugin_registry.rule_dirs:
-            all_rules.extend(load_rules_dir(pdir))
-        all_rules.extend(plugin_registry.rules)
-        engine = RuleEngine(all_rules)
+    engine = build_engine(no_rules, rules_dir, plugin_registry)
 
     adapter = TailAdapter(path, from_start=from_start, poll_interval=poll_interval)
 
