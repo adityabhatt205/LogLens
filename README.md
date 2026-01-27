@@ -80,7 +80,7 @@ The IP addresses above (`ip_8390373f`, …) are deterministic pseudonyms — the
 
 | Capability | Details |
 |---|---|
-| **Format support** | Syslog, Nginx access/error, JSON Lines, Windows Event Log (EVTX), plaintext — auto-detected |
+| **Format support** | Syslog, Nginx access/error, JSON Lines, plaintext — auto-detected; reads plain, gzip, and `.xlsx` files |
 | **PII redaction** | Emails, IPs, credit cards, phone numbers, UUIDs, JWTs, SSH keys — deterministic pseudonymisation or masking |
 | **Rule engine** | YAML-based rules with `contains`, `regex`, `startswith`, `endswith`, `gte`, `lte` operators; multi-field AND/OR |
 | **Sigma support** | Convert Sigma rules to native format |
@@ -143,7 +143,7 @@ Includes: file scanning, PII redaction, rule engine, anomaly detection, findings
 pip install 'loglens[web]'         # web dashboard + REST API (FastAPI, uvicorn, Jinja2)
 pip install 'loglens[docker]'      # read logs from local Docker containers
 pip install 'loglens[opensearch]'  # OpenSearch / Elasticsearch integration
-pip install 'loglens[evtx]'        # Windows Event Log (.evtx) support
+pip install 'loglens[xlsx]'        # read .xlsx spreadsheet log exports
 pip install 'loglens[claude]'      # Anthropic Claude API
 pip install 'loglens[embed]'       # ChromaDB for RAG (llm ask command)
 ```
@@ -151,7 +151,7 @@ pip install 'loglens[embed]'       # ChromaDB for RAG (llm ask command)
 Install everything:
 
 ```bash
-pip install 'loglens[web,docker,opensearch,evtx,claude,embed]'
+pip install 'loglens[web,docker,opensearch,xlsx,claude,embed]'
 ```
 
 ### Shell auto-completion
