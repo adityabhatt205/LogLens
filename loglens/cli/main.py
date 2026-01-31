@@ -28,6 +28,7 @@ from loglens.cli.findings_cmd import app as findings_app
 from loglens.cli.fleet_cmd import app as fleet_app
 from loglens.cli.graylog_cmd import app as graylog_app
 from loglens.cli.journald_cmd import app as journald_app
+from loglens.cli.kubernetes_cmd import app as kubernetes_app
 from loglens.cli.llm_cmd import app as llm_app
 from loglens.cli.loki_cmd import app as loki_app
 from loglens.cli.opensearch_cmd import app as opensearch_app
@@ -55,6 +56,7 @@ app.add_typer(rules_app, name="rules")
 app.add_typer(opensearch_app, name="opensearch")
 app.add_typer(docker_app, name="docker")
 app.add_typer(journald_app, name="journald")
+app.add_typer(kubernetes_app, name="kubernetes")
 app.add_typer(ssh_app, name="ssh")
 app.add_typer(loki_app, name="loki")
 app.add_typer(graylog_app, name="graylog")
