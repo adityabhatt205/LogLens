@@ -32,6 +32,7 @@ from loglens.cli.kubernetes_cmd import app as kubernetes_app
 from loglens.cli.llm_cmd import app as llm_app
 from loglens.cli.loki_cmd import app as loki_app
 from loglens.cli.opensearch_cmd import app as opensearch_app
+from loglens.cli.s3_cmd import app as s3_app
 from loglens.cli.ssh_cmd import app as ssh_app
 from loglens.cli.windows_cmd import app as windows_app
 from loglens.config import Config
@@ -59,6 +60,7 @@ app.add_typer(docker_app, name="docker")
 app.add_typer(journald_app, name="journald")
 app.add_typer(kubernetes_app, name="kubernetes")
 app.add_typer(windows_app, name="windows")
+app.add_typer(s3_app, name="s3")
 app.add_typer(ssh_app, name="ssh")
 app.add_typer(loki_app, name="loki")
 app.add_typer(graylog_app, name="graylog")
