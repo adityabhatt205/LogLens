@@ -19,6 +19,7 @@ from loglens.anomaly.features import FeatureExtractor
 from loglens.cli import serve_cmd, tail_cmd
 from loglens.cli._types import REDACT_MAP, RedactModeArg
 from loglens.cli.anomaly_cmd import app as anomaly_app
+from loglens.cli.cloudwatch_cmd import app as cloudwatch_app
 from loglens.cli.colors import SEVERITY_COLOR
 from loglens.cli.demo_cmd import app as demo_app
 from loglens.cli.docker_cmd import app as docker_app
@@ -26,6 +27,7 @@ from loglens.cli.errors_cmd import app as errors_app
 from loglens.cli.export_cmd import app as export_app
 from loglens.cli.findings_cmd import app as findings_app
 from loglens.cli.fleet_cmd import app as fleet_app
+from loglens.cli.gcp_cmd import app as gcp_app
 from loglens.cli.graylog_cmd import app as graylog_app
 from loglens.cli.journald_cmd import app as journald_app
 from loglens.cli.kubernetes_cmd import app as kubernetes_app
@@ -62,6 +64,8 @@ app.add_typer(journald_app, name="journald")
 app.add_typer(kubernetes_app, name="kubernetes")
 app.add_typer(windows_app, name="windows")
 app.add_typer(s3_app, name="s3")
+app.add_typer(cloudwatch_app, name="cloudwatch")
+app.add_typer(gcp_app, name="gcp")
 app.add_typer(ssh_app, name="ssh")
 app.add_typer(syslog_app, name="syslog")
 app.add_typer(loki_app, name="loki")
