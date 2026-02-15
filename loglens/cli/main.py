@@ -18,6 +18,7 @@ from loglens.anomaly.detector import (
 from loglens.anomaly.features import FeatureExtractor
 from loglens.cli import serve_cmd, tail_cmd
 from loglens.cli._types import REDACT_MAP, RedactModeArg
+from loglens.cli.alerts_cmd import app as alerts_app
 from loglens.cli.anomaly_cmd import app as anomaly_app
 from loglens.cli.cloudwatch_cmd import app as cloudwatch_app
 from loglens.cli.colors import SEVERITY_COLOR
@@ -77,6 +78,7 @@ app.add_typer(anomaly_app, name="anomaly")
 app.add_typer(llm_app, name="llm")
 app.add_typer(demo_app, name="demo")
 app.add_typer(export_app, name="export")
+app.add_typer(alerts_app, name="alerts")
 
 
 def _load_config(config_path: Path | None) -> Config:
