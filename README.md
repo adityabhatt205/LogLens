@@ -176,7 +176,7 @@ loglens --install-completion    # bash / zsh / fish / PowerShell
 
 ## CLI Reference
 
-All commands accept `--config/-c <path>` to specify a config file. Defaults to `config.yaml` in the working directory.
+All commands accept `--config/-c <path>` to specify a config file. Without it, LogLens auto-discovers one from (in order) `$LOGLENS_CONFIG`, `./config.yaml`, then `~/.config/loglens/config.yaml`; if none exist, built-in defaults are used.
 
 ---
 
@@ -1079,7 +1079,9 @@ loglens demo clear
 
 ## Configuration
 
-Copy `config.yaml.example` to `config.yaml` and adapt:
+Copy `config.yaml.example` to `config.yaml` and adapt. When no `--config` is
+passed, LogLens looks for a config in `$LOGLENS_CONFIG`, `./config.yaml`, then
+`~/.config/loglens/config.yaml`.
 
 ```yaml
 # SQLite database for findings, errors, and baselines
