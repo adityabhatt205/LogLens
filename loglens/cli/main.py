@@ -16,7 +16,7 @@ from loglens.anomaly.detector import (
     detect_anomalies as run_anomaly_detection,
 )
 from loglens.anomaly.features import FeatureExtractor
-from loglens.cli import serve_cmd, tail_cmd
+from loglens.cli import serve_cmd, setup_cmd, tail_cmd
 from loglens.cli._types import REDACT_MAP, RedactModeArg
 from loglens.cli.agent_cmd import app as agent_app
 from loglens.cli.alerts_cmd import app as alerts_app
@@ -58,6 +58,7 @@ from loglens.storage.findings_repo import FindingsRepository, meets_min_severity
 app = typer.Typer(name="loglens", help="LogLens — local log analysis with LLM support.")
 app.command("tail")(tail_cmd.tail_watch)
 app.command("serve")(serve_cmd.serve)
+app.command("init")(setup_cmd.init)
 rules_app = typer.Typer(help="Manage detection rules.")
 app.add_typer(rules_app, name="rules")
 app.add_typer(opensearch_app, name="opensearch")

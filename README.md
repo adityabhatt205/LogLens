@@ -1079,9 +1079,16 @@ loglens demo clear
 
 ## Configuration
 
-Copy `config.yaml.example` to `config.yaml` and adapt. When no `--config` is
-passed, LogLens looks for a config in `$LOGLENS_CONFIG`, `./config.yaml`, then
+Run `loglens init` to generate a `config.yaml` (with a freshly generated PII
+salt), or copy `config.yaml.example` and adapt. When no `--config` is passed,
+LogLens looks for a config in `$LOGLENS_CONFIG`, `./config.yaml`, then
 `~/.config/loglens/config.yaml`.
+
+```bash
+loglens init                              # write ./config.yaml
+loglens init --minimal                    # smaller starter config
+loglens init -o ~/.config/loglens/config.yaml
+```
 
 ```yaml
 # SQLite database for findings, errors, and baselines
