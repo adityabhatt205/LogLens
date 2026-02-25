@@ -59,6 +59,7 @@ app = typer.Typer(name="loglens", help="LogLens — local log analysis with LLM 
 app.command("tail")(tail_cmd.tail_watch)
 app.command("serve")(serve_cmd.serve)
 app.command("init")(setup_cmd.init)
+app.command("doctor")(setup_cmd.doctor)
 rules_app = typer.Typer(help="Manage detection rules.")
 app.add_typer(rules_app, name="rules")
 app.add_typer(opensearch_app, name="opensearch")

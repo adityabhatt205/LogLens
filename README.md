@@ -1090,6 +1090,16 @@ loglens init --minimal                    # smaller starter config
 loglens init -o ~/.config/loglens/config.yaml
 ```
 
+Run `loglens doctor` to verify your setup — it checks that the config loads, a
+PII salt is set, the database directory is writable, the LLM provider is
+configured/reachable (and that cloud API keys are present), plugins load, and
+alert channels build. It exits non-zero on hard failures, so it works in CI too.
+
+```bash
+loglens doctor
+loglens doctor --config ~/.config/loglens/config.yaml
+```
+
 ```yaml
 # SQLite database for findings, errors, and baselines
 db_path: loglens.db        # use /data/loglens.db inside Docker

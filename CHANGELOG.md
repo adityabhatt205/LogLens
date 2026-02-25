@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`loglens init`:** scaffold a `config.yaml` with a freshly generated PII salt.
   Supports `--minimal`, `--force` and `-o/--output` (creates parent directories),
   so a working config is one command away.
+- **`loglens doctor`:** an environment health check — verifies the config loads,
+  a PII salt is set, the database directory is writable, the LLM provider is
+  configured/reachable (cloud API keys present), plugins load, and alert channels
+  build. Exits non-zero on hard failures for use in CI.
 - **Config auto-discovery:** when no `--config` is given, LogLens now searches
   `$LOGLENS_CONFIG`, `./config.yaml`, then `~/.config/loglens/config.yaml`
   before falling back to built-in defaults — so you no longer have to pass
