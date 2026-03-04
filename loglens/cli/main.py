@@ -7,6 +7,7 @@ from typing import Annotated, Optional
 
 import typer
 
+from loglens.adapters.base import SourceAdapter
 from loglens.adapters.file import FileAdapter
 from loglens.adapters.stdin import StdinAdapter
 from loglens.anomaly.baseline import compute_stats
@@ -44,7 +45,7 @@ from loglens.cli.windows_cmd import app as windows_app
 from loglens.config import Config
 from loglens.errors.tracker import ErrorTracker
 from loglens.models import Event, Finding
-from loglens.parsers.detector import FormatDetector
+from loglens.parsers.detector import FormatDetector, LogFormat
 from loglens.pii.patterns import PIIPattern
 from loglens.pii.redactor import PIIRedactor
 from loglens.plugins.loader import compile_plugin_pii_patterns, load_plugins
@@ -126,7 +127,8 @@ def _detect_format_name(adapter) -> str:
                     lines.append(line)
                 if len(lines) >= 5:
                     break
-            return FormatDetector().detect(lines, adapter.path).value
+            detected = FormatDetector().detect(lines, adapter.path)
+            return detected.value if isinstance(detected, LogFormat) else detected
         except Exception:
             return "unknown"
     return "unknown"
@@ -252,7 +254,7 @@ def scan(
 
     async def _run() -> None:
         if use_stdin:
-            adapter = StdinAdapter()
+            adapter: SourceAdapter = StdinAdapter()
             typer.echo("Reading from stdin...", err=True)
         else:
             if not path or not path.exists():
